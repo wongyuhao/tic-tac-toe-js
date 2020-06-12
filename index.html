@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="style.css" rel="stylesheet" type= "text/css">
+  </head>
+
+  <body>
+    <div id="flex-container">
+
+    <div id="end" class="overlay hidden">
+      <p>Game Over</p>
+      <p id="winner"></p>
+      <button id ="reset">New Game?</button>
+    </div>
+
+    <div id="startMenu" class="overlay">
+      <p>Enter Your Names:</p>
+      <form name ="nameForm">
+        <label for="name1">Player 1:</label><br>
+        <input type="text" id="name1" name="name1" placeholder="Player 1"><br>
+        <label for="player2">Player 2:</label><br>
+        <input type="text" id="name2" name="name2" placeholder ="Player 2">
+        <input type="button" id ="start" value="Start Game">
+      </form> 
+      
+    </div>
+
+    <div class="info">
+      <p>Current Player:</p>
+      <p id="p1" class=""></p>
+      <p id="p2" class="hidden"></p>
+    </div>
+
+    
+    <div id="board">
+
+    </div>
+    <button id="undo">Undo</button>
+
+    </div>
+
+    
+
+    
+
+    <script src ="script.js"></script>
+  </body> 
+</html>
