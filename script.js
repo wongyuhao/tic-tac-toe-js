@@ -160,14 +160,24 @@ const GameboardFactory = (()=>{
     
     endOverlay.classList.remove("hidden")
     const winner = document.querySelector("#winner")
+    
+
+ 
     if(win){
+
+
+      winner.style.color = (winPlayer===players[0] ? "rgb(255, 0, 155)" : "rgb(0, 255, 255)");
+      winner.style["font-weight"]= "bold"
       winner.innerHTML =`${winPlayer.name} wins!`
+
     }else{
+      winner.style.color = "white";
       winner.innerHTML =`It's a Tie!`
     }
     const cells = Array.from(document.querySelectorAll(".cell"))
     cells.forEach(cell=> {
       cell.style.pointerEvents = "none";
+      
     })
   }
   
@@ -209,27 +219,34 @@ const displayController = (()=>{
 
   
   
-  
+  const truncate = (str, n)=>{
+    return (str.length > n) ? str.substr(0, n-1) : str;
+  };
   
   const init =()=>{  
    
    startMenu.classList.add("hidden")
-   let name1 = document.forms["nameForm"]["name1"].value;
-   let name2 = document.forms["nameForm"]["name2"].value;
+   let name1 = truncate(document.forms["nameForm"]["name1"].value, 20);
+   let name2 = truncate(document.forms["nameForm"]["name2"].value, 20);
 
     board.innerHTML="";
     game = GameboardFactory();
     
-  
+    if (name1 ===""){
+      name1 = "Player 1"
+    }
+    if (name2 ===""){
+      name2 = "Player 2"
+    }
     game.init(playerFactory(name1),playerFactory(name2))
 
     const p1t = document.querySelector("#p1");
-    p1t.textContent= game.players[0].name
-    p1t.style.color = "red"
+    p1t.textContent= `${game.players[0].name} [X]`
+    p1t.style.color = "rgb(255, 0, 155)"
 
     const p2t = document.querySelector("#p2");
-    p2t.textContent= game.players[1].name
-    p2t.style.color = "blue"
+    p2t.textContent= `${game.players[1].name} [O]`
+    p2t.style.color = "rgb(0, 255, 255)"
 
     
     
@@ -240,10 +257,16 @@ const displayController = (()=>{
 
         img.src=findAsset(game.board[row][col]);        
         img.style.width="100%";
+        img.style.display = "block";
+       
+        
         img.setAttribute("class","image");
         img.setAttribute("id", `${row}-${col}-img`)
+        
 
-        cellDiv.style.border= "1px solid black";
+        cellDiv.style["background-color"]= "rgba(0,0,0,0.3)";
+        
+        
         cellDiv.setAttribute("class","cell");
         cellDiv.setAttribute("id", `${row}-${col}-div`)
 
@@ -287,13 +310,14 @@ const displayController = (()=>{
 
   const addListeners = () =>{
     const undo = document.querySelector("#undo");
-    undo.addEventListener("click", function(){
+    undo.addEventListener("mouseup", function(){
       game.undo()
       render();
     })
 
     const cells = Array.from(document.querySelectorAll(".cell"))
     cells.forEach(cell=> {
+      cell.style.cursor = "pointer";
       cell.addEventListener("click",function(){
         const coords = cell["id"].split("-")
         game.place(coords[0],coords[1]);
