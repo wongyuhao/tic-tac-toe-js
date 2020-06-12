@@ -43,11 +43,12 @@ const GameboardFactory = (()=>{
       console.log(`Turn: ${turn}`)
       p1.classList.toggle("hidden")
       p2.classList.toggle("hidden")
-      turn++;
+      
 
       if(!checkBoard(board)&&boardFull(board)){
         end();
       }
+      turn++;
       
       return true
     }else{
